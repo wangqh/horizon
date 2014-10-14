@@ -1,0 +1,99 @@
+<div class="page row">
+    <div ng-include="'/views/networks.html'" class="page-header">
+    </div>
+    <ul class="nav nav-tabs page-tabs">
+        <li><a href="/horizon/networks/vxnets/" ><span class="glyphicon glyphicon-transfer"></span> 私有网络</a></li>
+        <li class="active"><a href="/horizon/networks/routers/" ><span class="glyphicon glyphicon-tower"></span> 路由器</a></li>
+        <li><a href="/horizon/networks/topology/" ><span class="glyphicon glyphicon-retweet"></span> 拓扑图</a></li>
+    </ul>
+
+    <div class="page-body">
+        <div class="page-intro alert-info">
+            GlodonCloud路由器 (Routers) 用于受管私有网络之间互联，并提供以下附加服务：DHCP 服务、端口转发、隧道服务、VPN 服务和过滤控制。如果您还希望路由器能接入互联网，请捆绑一个公网 IP 给该路由器即可。
+        </div>
+        <div class="panel-table">
+            <div class="toolbar">
+                <button ng-click="fetchList()" class="btn btn-sm btn-gray" type="button">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+                <button ng-click="createItem()" class="btn btn-sm btn-gray" type="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    新建
+                </button>
+                <div dropdown class="btn-group">
+                    <button ng-disabled="handleDisabled" class="btn btn-sm btn-gray dropdown-toggle" type="button">
+                        更多操作
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-class="{disabled: notSigleChecked}"><a ng-click="changeItem()" href="#">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            修改
+                        </a></li>
+                        <li ng-class="{disabled: handleDisabled}"><a ng-click="removeItems()" href="#">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            删除
+                        </a></li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <form class="form-search" ng-submit="fetchList()">
+                        <span class="glyphicon glyphicon-search"></span>
+                        <input type="search" class="form-control input-sm" placeholder="" ng-model="filterService.searchText" name="searchList" />
+                    </form>
+                </div>
+                <div class="pull-right form-inline" ng-if="hasPaginator">
+                    <span class="text-muted small">
+                        每页
+                        <input type="text" class="form-control input-sm tiny" ng-model="page.size" ng-blur="fetchList()" />
+                        页数 {{ currentPageNum }} / {{ totalPageNum }}
+                    </span>
+                    &nbsp;&nbsp;&nbsp;
+                    <button ng-click="searchPaginator.previous()" ng-disabled="!searchPaginator.hasPrevious()" class="btn btn-sm btn-gray" type="button">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </button>
+                    <button ng-click="searchPaginator.next()" ng-disabled="!searchPaginator.hasNext()" class="btn btn-sm btn-gray" type="button">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
+                </div>
+
+            </div>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th width="10%">
+                        <div class="checkbox">
+                            <label><input type="checkbox" ng-change="checkAll()" ng-model="isCheckAll"></label>
+                        </div>
+                    </th>
+                    <th>名称</th>
+                    <th>状态
+                    </th>
+                    <th>外部网络</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in searchPaginator.currentPageItems | filter:filterService.searchText">
+                        <td>
+                            <div class="checkbox">
+                                <label><input ng-model="item.checked" ng-change="updateHandlebarStatus()" type="checkbox"></label>
+                            </div>
+                        </td>
+                        <td>
+                            <a href="/horizon/networks/routers/{{ item.id }}">{{ item.name }}</a>
+                        </td>
+                        <td>{{ item.status }}</td>
+                        <td>{{ item.external_gateway_info.network }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p ng-if="isNull" class="none" >结果为空</p>
+
+            <p class="tips">* 提示：可通过在各个资源上点击<span class="alert-info">“右键”</span>来进行常用操作，以及<span
+                    class="alert-info">“双击”</span>来修改基本属性。</p>
+
+            <div ng-show="isLoading"><p class="loading">正在加载...</p></div>
+        </div>
+    </div>
+</div>
+

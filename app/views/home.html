@@ -1,0 +1,65 @@
+<div class="dashboard">
+    <div class="row home-header">
+        <div class="col-sm-3">
+            <div class="zone">
+                <h1>
+                    <span class="glyphicon glyphicon-map-marker"></span>
+                    <strong ng-bind="zone.name"></strong>
+                </h1>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+                <div class="col-sm-3">
+                   <!-- <div class="quotes">
+                        <button class="btn btn-quotes" ng-click="openQuotes()" type="button">
+                            <span class="glyphicon glyphicon-th-list"></span>
+                            资源配额
+                        </button>
+                    </div>-->
+                    <div ng-if="user.isAdmin" class="quotes form-inline">
+                        选择租户：
+                        <select ng-model="tenant.id" ng-change="selectTenant()" ng-options="t.id as t.name for t in listTenant" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div class="charge">
+                        帐户余额：
+                        <a class="balance-total" href="/account" target="_blank">2</a>
+                        <span class="unit">元</span>
+                        <a class="link" href="/horizon/consumptions/" >[消费记录]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <ul class="list-resource-summary list-unstyled">
+            <li ng-repeat="item in listResource">
+                <a href="{{ item.link }}">
+                    <strong>{{ item.count }}</strong>
+                    <h2>
+                        <span class="glyphicon glyphicon-{{ item.icon }}"></span>
+                        {{ item.name }}
+                    </h2>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>
+                <a href="/horizon/activities/" >最近操作</a>
+            </h3>
+            <div class="inner"><p class="none">无</p></div>
+        </div>
+        <div class="col-sm-6">
+            <h3>
+                <a href="/horizon/tickets/" >最新工单</a>
+            </h3>
+            <div class="inner"><p class="none">无</p></div>
+        </div>
+    </div>
+</div>
+

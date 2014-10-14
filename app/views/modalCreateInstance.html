@@ -1,0 +1,306 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="dismiss()">&times;</button>
+    <h4 class="modal-title">新建主机</h4>
+</div>
+<div class="modal-body">
+        <div ng-if="isLoading" class="butterbar"></div>
+
+        <div ng-if="data" class="modal-instance clearfix">
+            <div class="steps-wrap">
+                <div class="wizard">
+                    <ol class="wizard-nav clearfix">
+                        <li ng-class="{active: wizard.step == 1}">
+                            选择映像
+                            <hr />
+                            <span>
+                                1
+                            </span>
+                        </li>
+                        <li ng-class="{active: wizard.step == 2}">
+                            选择类型
+                            <hr />
+                            <span>
+                                2
+                            </span>
+                        </li>
+                       <!-- <li ng-class="{active: wizard.step == 3}">
+                            设置网络
+                            <hr />
+                            <span>
+                                3
+                            </span>
+                        </li>-->
+                        <li ng-class="{active: wizard.step == 3}">
+                            基本设置
+                            <span>3</span>
+                        </li>
+                    </ol>
+                    <div class="wizard-content">
+                        <form ng-submit="submit()" class="form form-horizontal" name="formCreateInstance" novalidate>
+                            <div class="steps" id="steps">
+                                <div class="step" ng-class="{active: wizard.step == 1, left: wizard.step == 2}">
+                                    <div class="step-inner">
+                                        <div class="toolbar">
+                                            <div class="provider">
+                                                映像提供方：
+                                                <a class="provider-filter" ng-class="{active: image.currentType == 'system'}" ng-click="fetchImages('system')" href="#">系统</a>
+                                                <a class="provider-filter" ng-class="{active: image.currentType == 'self'}" ng-click="fetchImages('self')" href="#">自有</a>
+                                            </div>
+                                            <div class="pull-right" ng-if="hasPaginator">
+                                                <span class="text-muted small">
+                                                    Page {{ currentPageNum }} of {{ totalPageNum }}
+                                                </span>
+                                                &nbsp;
+                                                <button ng-click="paginator.previous()" ng-disabled="!paginator.hasPrevious()" class="btn btn-sm btn-gray" type="button">
+                                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                                </button>
+                                                <button ng-click="paginator.next()" ng-disabled="!paginator.hasNext()" class="btn btn-sm btn-gray" type="button">
+                                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="list-wrap" >
+                                            <ul ng-if="paginator.currentPageItems.length > 0" class="nav nav-pills nav-stacked">
+                                                <li ng-repeat="item in paginator.currentPageItems" ng-class="{active: item.selected}">
+                                                    <a href="#" ng-click="image.select(item)">
+                                                        {{ item.name }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <p ng-if="image.isNull" class="none">无</p>
+                                            <div ng-show="image.isLoading"><p class="loading">正在加载...</p></div>
+                                        </div>
+                                    </div>
+                                    <div class="step-action clearfix">
+                                        <button type="button" ng-click="wizard.next()" class="btn btn-gray pull-right">下一步</button>
+                                    </div>
+                                </div>
+
+                                <div class="step" ng-class="{active: wizard.step == 2, left:  wizard.step == 3, right: wizard.step == 1}">
+                                    <div class="step-inner">
+                                        <div class="instance-types">
+                                            <h5>推荐类型</h5>
+                                            <div class="types clearfix">
+                                                <div ng-repeat="item in data.types" class="item" ng-class="{active: item.selected}" ng-click="selectType(item)">
+                                                    <div class="inner">
+                                                        <div class="block"><span class="glyphicon glyphicon-ok"></span></div>
+                                                        <h6>{{ item.vcpus }}核{{ item.ram > 1024 ? item.ram/1024 + 'G' : item.ram + 'M' }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cpu">
+                                                <h6>CPU</h6>
+                                                <div class="nav nav-pills nav-justified">
+                                                    <li ng-repeat="h in [1,2,4,8]" class="{{ currentType.vcpus == h ? 'active' : 'disabled'}}"><a href="#">{{ h }} 核</a></li>
+                                                </div>
+                                            </div>
+                                            <div class="memory">
+                                                <h6>内存</h6>
+                                                <div class="nav nav-pills nav-justified">
+                                                    <li ng-repeat="m in [512, 2048, 4096, 8192, 16384]" class="{{ currentType.ram == m ? 'active' : 'disabled'}}"><a href="#">{{ m > 1024 ? m/1024 + 'G' : m + 'M' }}</a></li>
+                                                </div>
+                                            </div>
+                                            <div class="volume">
+                                                <h6>硬盘</h6>
+                                                <table class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <div class="checkbox">
+                                                                <label><input type="checkbox" /></label>
+                                                            </div>
+                                                        </th>
+                                                        <th>ID</th>
+                                                        <th>名称</th>
+                                                        <th>容量 (GB)</th>
+                                                        <th>类型</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="step-action">
+                                        <button type="button" ng-click="wizard.next()" class="btn btn-gray pull-right">下一步</button>
+                                        <button type="button" ng-click="wizard.prev()" class="btn btn-gray">上一步</button>
+                                    </div>
+                                </div>
+<!--
+                                <div class="step" ng-class="{active: wizard.step == 3, left:  wizard.step == 4, right: wizard.step == 2}">
+                                    <div class="step-inner">
+                                        <div class="vxnets">
+                                            <h4>基础网络</h4>
+                                            <div class="list-wrap" >
+                                                <ul ng-if="data.networks.length > 0" class="nav nav-pills nav-stacked">
+                                                    <li ng-repeat="item in data.networks" ng-class="{checked: item.checked}">
+                                                        <a href="#" ng-click="radio(data.networks, item)">
+                                                            <span class="glyphicon glyphicon-ok"></span>
+                                                            <span class="name" ng-bind="item.name"></span>
+                                                            <span class="text-muted" ng-bind="item.id"></span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <p ng-if="data.networks.length == 0" class="none">无</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="firewall">
+                                            <h4>防火墙</h4>
+                                            <div class="list-wrap" >
+                                                <ul ng-if="data.security_groups.length > 0" class="nav nav-pills nav-stacked">
+                                                    <li ng-repeat="item in data.security_groups" ng-class="{checked: item.checked}">
+                                                        <a href="#" ng-click="checkbox(item)">
+                                                            <span class="glyphicon glyphicon-ok"></span>
+                                                            <span class="name" ng-bind="item.name"></span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <p ng-if="data.networks.length == 0" class="none">无</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="create_public_ip" ng-model="formData.create_public_ip"/>
+                                                是否创建公网IP
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                    <div class="step-action">
+                                        <button type="button" ng-click="wizard.next()" class="btn btn-gray pull-right">下一步</button>
+                                        <button type="button" ng-click="wizard.prev()" class="btn btn-gray">上一步</button>
+                                    </div>
+                                </div>-->
+
+                                <div class="step" ng-class="{active: wizard.step == 3,  right: wizard.step == 2}">
+                                    <div class="step-inner">
+                                        <div ng-switch on="formData.ssh.type">
+                                            <div class="form-group" ng-class="{'has-error': formCreateInstance.instanceName.$invalid && instanceNameValidate}">
+                                                <label class="col-sm-3 control-label" for="instanceName">主机名称</label>
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control" required ng-model="formData.name" ng-blur="instanceNameValidate = true" ng-focus="instanceNameValidate = false" id="instanceName" name="instanceName">
+                                                    <div  ng-show="formCreateInstance.instanceName.$invalid && instanceNameValidate" class="help-block">
+                                                        <alert ng-show="formCreateInstance.instanceName.$error.required && instanceNameValidate" type="danger">主机名称不能为空</alert>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error': formCreateInstance.instanceCount.$invalid && instanceCountValidate}">
+                                                <label class="col-sm-3 control-label" for="instanceCount">主机数量</label>
+                                                <div class="col-sm-7">
+                                                    <input type="number" class="form-control" min="1" required ng-model="formData.count" ng-blur="instanceCountValidate = true" ng-focus="instanceCountValidate = false"  id="instanceCount" name="instanceCount">
+                                                    <div ng-show="formCreateInstance.instanceCount.$invalid && instanceCountValidate" class="help-block">
+                                                        <alert ng-show="formCreateInstance.instanceCount.$error.required && instanceCountValidate" type="danger">主机数量不能为空</alert>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label" >SSH登录方式</label>
+                                                <div class="col-sm-7">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="loginMode" ng-model="formData.ssh.type" value="keypair"> SSH密钥
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="loginMode" ng-model="formData.ssh.type" value="password"> 密码
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="loginMode" ng-model="formData.ssh.type" value="none"> 无
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div ng-switch-when="keypair">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" for="userName">用户名</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" ng-value="user.name" id="userName" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" for="keypair">SSH密钥</label>
+                                                    <div ng-if="data.keypairs.length" class="col-sm-7">
+                                                        <select  class="form-control" ng-model="keypair" id="keypair" ng-options="o for o in data.keypairs">
+                                                        </select>
+                                                    </div>
+                                                    <div ng-if="!data.keypairs.length" class="col-sm-9">
+                                                        <p class="none form-control-static">当前没有可用的SSH密钥, 请先<a href="#" ng-click="createSSH()">新建SSH密钥</a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-switch-when="password">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" for="userName">用户名</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" ng-value="user.name" id="userName" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" ng-class="{'has-error': formCreateInstance.password.$invalid && passwordValidate}">
+                                                    <label class="col-sm-3 control-label" for="password">密码</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="{{ showWord ? 'text' : 'password' }}" required ng-minlength="8" ng-blur="passwordValidate = true" ng-focus="passwordValidate = false" ng-pattern="/^[A-Za-z]+[0-9]+/" class="form-control" ng-model="ssh.password" name="password" id="password" >
+                                                        <div ng-show="formCreateInstance.password.$invalid && passwordValidate" class="help-block">
+                                                            <alert ng-show="formCreateInstance.password.$error.minlength && passwordValidate" type="danger">密码至少8位</alert>
+                                                            <alert ng-show="formCreateInstance.password.$error.required && passwordValidate" type="danger">密码不能为空</alert>
+                                                            <alert ng-show="formCreateInstance.password.$error.pattern && passwordValidate" type="danger">密码必须以字母开头和数字组成</alert>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pull-left">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" ng-model="showWord"/> 显示密码
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="step-action">
+                                        <button type="submit" class="btn btn-primary pull-right" ng-disabled="formCreateInstance.$invalid">创建</button>
+                                        <button type="button" ng-click="wizard.prev()" class="btn btn-gray">上一步</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="info-wrap">
+                <h4>配置详情</h4>
+                <table class="table table-bordered table-hover">
+                    <tbody>
+                    <tr>
+                        <td width="50">映像</td>
+                        <td ng-bind="currentImage.name"></td>
+                    </tr>
+                    <tr>
+                        <td>类型</td>
+                        <td>{{ currentType.vcpus }}核{{ currentType.ram > 1024 ? currentType.ram/1024 + 'G' : currentType.ram + 'M' }}</td>
+                    </tr>
+                    <tr>
+                        <td>CPU</td>
+                        <td>{{ currentType.vcpus }} 核</td>
+                    </tr>
+                    <tr>
+                        <td>内存</td>
+                        <td>{{ currentType.ram > 1024 ? currentType.ram/1024 + 'G' : currentType.ram + 'M' }}</td>
+                    </tr>
+                    <tr>
+                        <td>名称</td>
+                        <td ng-bind="formData.name"></td>
+                    </tr>
+                    <tr>
+                        <td>数量</td>
+                        <td ng-bind="formData.count"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+</div>

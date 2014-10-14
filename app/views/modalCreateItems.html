@@ -1,0 +1,173 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="dismiss()">&times;</button>
+    <h4 class="modal-title">{{ title }}</h4>
+</div>
+<div class="modal-body">
+    <div ng-if="formGroup.steps" class="modal-steps">
+        <div class="steps-wrap">
+            <div class="wizard">
+                <ol class="wizard-nav clearfix">
+                    <li ng-repeat="step in formGroup.steps" ng-class="{active: formGroup.wizard.step == ($index + 1)}">
+                        {{ step.title }}
+                        <hr ng-if="$index < (formGroup.steps.length - 1)" />
+                    <span>
+                        {{ $index + 1 }}
+                    </span>
+                    </li>
+                </ol>
+                <div class="wizard-content">
+                    <form ng-submit="submit()" class="form form-horizontal" name="formCreateItem" novalidate>
+                        <div class="steps" id="steps">
+                            <div ng-repeat="step in formGroup.steps" class="step" ng-class="{active: formGroup.wizard.step == ($index + 1), left: formGroup.wizard.step == ($index + 2)}">
+                                <div class="step-inner">
+
+                                    <div ng-repeat="item in step.formGroup.modList" class="modItem">
+                                        <h4 ng-bind="item.title"></h4>
+                                        <div class="list-wrap" >
+                                            <ul ng-if="item.checkboxList.length > 0" class="nav nav-pills nav-stacked">
+                                                <li ng-repeat="li in item.checkboxList" ng-class="{checked: li.checked}">
+                                                    <a href="#" ng-click="checkbox(li)">
+                                                        <span class="glyphicon glyphicon-ok"></span>
+                                                        <span class="name" ng-bind="li.name"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <p ng-if="item.checkboxList.length == 0" class="none">无</p>
+                                        </div>
+                                    </div>
+
+                                    <div ng-repeat="item in step.formGroup" ng-switch on="item.type"  class="form-group" ng-class="{'has-error': item.hasError}">
+                                        <label class="col-sm-3 control-label">{{item.title}}</label>
+                                        <div ng-switch-when="text"  class="col-sm-8">
+                                            <input type="text" value="" ng-blur="validate(item)" ng-readonly="item.readonly" ng-required="item.required" class="form-control" name="{{ item.key }}" ng-model="item.val"  >
+                                            <div >
+                                                <alert class="help-block" ng-show="item.hasError" type="danger">{{item.title}}不能为空</alert>
+                                            </div>
+                                        </div>
+                                        <div ng-switch-when="textarea"  class="col-sm-8">
+                                            <textarea  ng-required="item.required" class="form-control" name="{{ item.key }}" ng-model="item.val" autofocus="{{item.autofocus ? '' : false}}" rows="2"></textarea>
+                                        </div>
+                                        <div ng-switch-when="checkbox"  class="col-sm-8">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox"  ng-required="item.required"  name="{{ item.key }}" ng-model="item.val"  >
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div ng-switch-when="select"  class="col-sm-8">
+                                            <select name="{{ item.key }}" ng-model="item.val" ng-options="o.id as o.name for o in item.options" class="form-control">
+                                                <option value="">选择{{ item.title }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="step-action clearfix">
+                                    <button ng-if="$index == (formGroup.steps.length-1)" type="submit" class="btn btn-primary pull-right" ng-disabled="formCreateItem.$invalid">创建</button>
+                                    <button ng-if="$index < (formGroup.steps.length-1)" type="button" ng-click="formGroup.wizard.next()" class="btn btn-gray pull-right">下一步</button>
+                                    <button ng-if="$index > 0" type="button" ng-click="formGroup.wizard.prev()" class="btn btn-gray">上一步</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <form ng-if="!formGroup.steps" ng-submit="submit()" class="form form-horizontal" name="formCreateItem" >
+        <fieldset>
+            <legend>{{ title }}</legend>
+            <tabset ng-if="formGroup.tabs">
+                <tab ng-repeat="tab in formGroup.tabs"  heading="{{tab.title}}" >
+                  <div ng-repeat="item in tab.formGroup" ng-switch on="item.type"  class="form-group">
+                      <label class="col-sm-3 control-label">{{item.title}}</label>
+                      <div ng-switch-when="text"  class="col-sm-8">
+                          <input type="text" value="" ng-readonly="item.readonly" ng-required="item.required" class="form-control" name="item.key" ng-model="item.val" autofocus="{{item.autofocus ? '' : false}}" >
+                      </div>
+                      <div ng-switch-when="textarea"  class="col-sm-8">
+                          <textarea  ng-required="item.required" class="form-control" name="item.key" ng-model="item.val" autofocus="{{item.autofocus ? '' : false}}" rows="2"></textarea>
+                      </div>
+                      <div ng-switch-when="checkbox"  class="col-sm-8">
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox"  ng-required="item.required"  name="item.key" ng-model="item.val"  >
+                              </label>
+                          </div>
+                      </div>
+                      <div ng-switch-when="select"  class="col-sm-8">
+                          <select name="item.key" ng-model="item.val" ng-options="o.id as o.name for o in item.options" class="form-control">
+                              <option value="">选择{{ item.title }}</option>
+                          </select>
+                      </div>
+                  </div>
+                </tab>
+            </tabset>
+
+            <div ng-repeat="item in formGroup.modList" class="modItem">
+                <h4 ng-bind="item.title"></h4>
+                <div class="list-wrap" >
+                    <ul ng-if="item.checkboxList.length > 0" class="nav nav-pills nav-stacked">
+                        <li ng-repeat="li in item.checkboxList" ng-class="{checked: li.checked}">
+                            <a href="#" ng-click="checkbox(li)">
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <span class="name" ng-bind="li.name"></span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p ng-if="item.checkboxList.length == 0" class="none">无</p>
+                </div>
+            </div>
+
+            <div ng-repeat="item in formGroup" ng-switch on="item.type" class="form-group" ng-if="!item.removed" >
+                  <label class="col-sm-3 control-label">{{item.title}}</label>
+                  <div ng-switch-when="text"  class="col-sm-8">
+                      <input type="text" value="" ng-readonly="item.readonly" ng-required="item.required"  class="form-control" name="{{ item.key }}" ng-model="item.val"  >
+                  </div>
+                <div ng-switch-when="number"  class="col-sm-8">
+                      <input type="number" value="" min="{{ item.options.min }}" ng-readonly="item.readonly" ng-required="item.required" class="form-control" name="{{ item.key }}" ng-model="item.val"  >
+                  </div>
+                  <div ng-switch-when="textarea"  class="col-sm-8">
+                      <textarea name="{{ item.key }}" ng-readonly="item.readonly" ng-required="item.required" class="form-control" rows="{{ item.rows }}" ng-model="item.val" ></textarea>
+                      <div ng-if="item.describe" class="help-block">
+                          <p class="none small">{{ item.describe }}</p>
+                      </div>
+                  </div>
+                  <div ng-switch-when="static"  class="col-sm-8">
+                      <p class="form-control-static">{{ item.val }}</p>
+                  </div>
+                  <div ng-switch-when="select"  class="col-sm-8">
+                      <select name="item.key" ng-model="item.val" ng-required="item.required" ng-options="o.id as o.name for o in item.options" class="form-control">
+                          <option ng-if="!item.val" value="">选择{{ item.title }}</option>
+                      </select>
+                      <div class="help-block none" ng-if="item.addBtn">
+                              {{ item.addBtn.desc }}
+                              <a href="#" ng-click="item.addBtn.method(item)" ng-bind="item.addBtn.text"></a>
+                      </div>
+                  </div>
+                    <div ng-switch-when="checkbox"  class="col-sm-8">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"  ng-required="item.required"  name="item.key" ng-model="item.val"  >
+                            </label>
+                        </div>
+                    </div>
+                    <div ng-switch-when="slider"  class="col-sm-8">
+                        <slider min="{{ item.options.min }}" max="{{ item.options.max }}" range="{{ item.options.range }}" orientation="{{ item.options.orientation }}" ng-model="item.val" ng-change="item.options.change()"></slider>
+                    </div>
+                    <div ng-switch-when="radio"  class="col-sm-8" >
+                            <label class="radio-inline" ng-repeat="radio in item.list" >
+                                <input type="radio"  ng-required="item.required"  name="{{ item.key }}" ng-change="switchShow(item.list, radio.showMod)"  ng-model="item.val" ng-value="radio.value" > {{ radio.label }}
+                            </label>
+                    </div>
+            </div>
+
+            <div class="form-group form-actions bg-gray">
+                <div class="col-sm-offset-3 col-sm-8">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <button type="reset" class="btn btn-default" ng-click="cancel()">取消</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

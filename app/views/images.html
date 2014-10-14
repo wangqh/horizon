@@ -1,0 +1,102 @@
+<div class="page row">
+    <div class="page-header">
+        <h1>映像 Images</h1>
+        <p class="lead">映像 (Image) 是带有操作系统的主机模板。GlodonCloud官方会提供主流的 Linux、Windows 模板，并根据上游厂商更新版本时及时制作新模板。用户也可以在将自己名下的主机制作成模板，以备后用。</p>
+    </div>
+    <ul class="nav nav-tabs page-tabs">
+        <li ng-class="{active: type == 'system'}"><a href="/horizon/images/system/" ><span class="glyphicon glyphicon-tower"></span> 系统</a></li>
+        <li ng-class="{active: type == 'self'}"><a href="/horizon/images/self/" ><span class="glyphicon glyphicon-user"></span> 自有</a></li>
+    </ul>
+
+    <div class="page-body">
+        <div class="page-intro alert-info">
+            {{ intro }}
+        </div>
+        <div class="panel-table">
+            <div ng-if="toolbar" class="toolbar">
+                <button ng-if="toolbar.hasRefresh" ng-click="fetchList()" class="btn btn-sm btn-gray" type="button">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+                <button ng-if="toolbar.hasCreate" ng-click="createItem()" class="btn btn-sm btn-gray" type="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    新建
+                </button>
+                <div dropdown ng-if="toolbar.handlebar" class="btn-group">
+                    <button ng-disabled="toolbar.handleDisabled" class="btn btn-sm btn-gray dropdown-toggle" type="button">
+                        更多操作
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-if="toolbar.handlebar.hasChange" ng-class="{disabled: toolbar.notSigleChecked}"><a ng-click="changeItem()" href="#">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            修改
+                        </a></li>
+                        <li ng-if="toolbar.handlebar.hasDelete" ng-class="{disabled: toolbar.handleDisabled}"><a ng-click="removeItems()" href="#">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            删除
+                        </a></li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <form ng-submit="fetchList()" class="form-search">
+                        <span class="glyphicon glyphicon-search"></span>
+                        <input type="search" class="form-control input-sm" placeholder=""  ng-model="filterService.searchText" name="searchList" />
+                    </form>
+                </div>
+                <div class="pull-right form-inline" ng-if="hasPaginator">
+                    <span class="text-muted small">
+                        每页
+                        <input type="text" class="form-control input-sm tiny" ng-model="page.size" ng-blur="fetchList()" />
+                        页数 {{ currentPageNum }} / {{ totalPageNum }}
+                    </span>
+                    &nbsp;&nbsp;&nbsp;
+                    <button ng-click="searchPaginator.previous()" ng-disabled="!searchPaginator.hasPrevious()" class="btn btn-sm btn-gray" type="button">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </button>
+                    <button ng-click="searchPaginator.next()" ng-disabled="!searchPaginator.hasNext()" class="btn btn-sm btn-gray" type="button">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
+                </div>
+
+            </div>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th ng-if="toolbar.handlebar" width="10%">
+                        <div class="checkbox">
+                            <label><input type="checkbox" ng-model="toolbar.handlebar.isCheckAll" ng-change="checkAll()"></label>
+                        </div>
+                    </th>
+                    <th>名称</th>
+                    <th>状态</th>
+                    <th>是否公开</th>
+                    <th>格式</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in searchPaginator.currentPageItems | filter:filterService.searchText">
+                    <td ng-if="toolbar.handlebar">
+                        <div class="checkbox">
+                            <label><input ng-model="item.checked" ng-change="updateHandlebarStatus()" type="checkbox"></label>
+                        </div>
+                    </td>
+                    <td>
+                        <a href="/horizon/images/{{ type }}/{{ item.id }}">{{ item.name }}</a>
+                    </td>
+                    <td>{{ item.status }}</td>
+                    <td>{{ item.is_public ? 'True' : 'False' }}</td>
+                    <td>{{ item.disk_format }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <p ng-if="isNull" class="none" >结果为空</p>
+
+            <p class="tips">* 提示：可通过在各个资源上点击<span class="alert-info">“右键”</span>来进行常用操作，以及<span
+                    class="alert-info">“双击”</span>来修改基本属性。</p>
+            <p ng-if="type == 'system'" class="tips">* 如果 Windows 映像标明为“未激活”，请自行购买 Windows 授权，常规渠道有<a href="http://www.microsoftstore.com.cn/windows" target="_blank"> 微软商店</a>或者<a href="http://www.taobao.com" target="_blank"> 淘宝。</a></p>
+
+            <div ng-show="isLoading"><p class="loading">正在加载...</p></div>
+        </div>
+    </div>
+</div>
+

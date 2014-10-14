@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN" ng-app="horizonApp">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css(.tmp) styles/login.css -->
+    <link rel="stylesheet" href="styles/login.css">
+    <!-- endbuild -->
+
+</head>
+<body>
+<div class="wrap">
+    <div id="login">
+        <div class="logo">
+            <h1>系统运维管理平台</h1>
+        </div>
+        <div class="main">
+            <form class="form" action="/login" method="post" >
+                <fieldset>
+                    <div class="form-group"><input type="text" required name="user" class="form-control"/></div>
+                    <div class="form-group"><input type="password" required name="password" class="form-control"/></div>
+                    <button type="submit" class="btn btn-primary btn-block">登录</button>
+                </fieldset>
+                <p class="help-block"><a href="/password/reset/">忘记密码</a></p>
+            </form>
+        </div>
+        <div class="footer"></div>
+    </div>
+</div>
+
+</body>
+</html>

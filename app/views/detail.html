@@ -1,0 +1,95 @@
+<div class="detail">
+    <div class="topbar">
+        <ol class="breadcrumb">
+            <li>
+                <span class="glyphicon glyphicon-dashboard"></span>
+                <a ng-href="{{parent.path}}">{{ parent.title }}</a>
+            </li>
+            <li class="active">{{ detail.title }}</li>
+        </ol>
+    </div>
+    <div class="row">
+        <div ng-class="{'col-sm-4': twoCol, 'col-sm-12': !twoCol}">
+            <div class="description">
+                <div class="title">
+                    <h4>基本属性&nbsp;</h4>
+                </div>
+                <dl class="dl-horizontal" ng-repeat="item in detail.basicParams" ng-switch on="item.type">
+                    <dt>{{ item.key }}</dt>
+                    <dd ng-switch-when="array">
+                        <div ng-repeat="e in item.val">{{ e }}</div>
+                        <div ng-if="!item.val.length" class="none">无</div>
+                    </dd>
+                    <dd ng-switch-default>
+                        {{ item.val }}
+                        <div ng-if="!item.val" class="none">无</div>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+
+        <div ng-if="detail.tableItems" class="col-sm-8">
+            <div class="detail-content">
+                <div ng-repeat="item in detail.tableItems" class="tableItem panel-table">
+                    <div class="title">
+                        <h4>{{ item.title }}列表</h4>
+                    </div>
+                    <div ng-if="item.toolbar" class="toolbar" >
+                        <button ng-if="item.toolbar.hasRefresh" ng-click="refresh(item)" class="btn btn-sm btn-gray" type="button">
+                            <span class="glyphicon glyphicon-refresh"></span>
+                        </button>
+                        <button  ng-if="item.toolbar.hasCreate" ng-click="createRow(item)" class="btn btn-sm btn-gray" type="button">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            新建{{ item.title }}
+                        </button>
+                        <div dropdown ng-if="item.toolbar.handlebar" class="btn-group" >
+                            <button ng-disabled="item.toolbar.handleDisabled" ng-init="updateHandlebarStatus(item)" class="btn btn-sm btn-gray dropdown-toggle" type="button">
+                                更多操作
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li ng-if="item.toolbar.handlebar.hasChange" ng-class="{disabled: item.toolbar.notSigleChecked}"><a ng-click="changeItem(item)" href="#">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    修改
+                                </a></li>
+                                <li ng-if="item.toolbar.handlebar.hasDelete" ng-class="{disabled: item.toolbar.handleDisabled}"><a ng-click="removeItems(item)" href="#">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                    删除
+                                </a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr >
+                            <th ng-repeat="th in item.table.thead" ng-switch on="th.type">
+                                <div  ng-switch-when="checkbox" class="checkbox">
+                                    <label><input type="checkbox" ng-model="item.isCheckAll" ng-change="checkAll(item);updateHandlebarStatus(item)"></label>
+                                </div>
+                                <span ng-switch-default>{{ th.text }}</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="tr in item.table.tbody" >
+                            <td ng-repeat="td in tr.tds" ng-switch on="td.type">
+                                <div ng-switch-when="checkbox" class="checkbox">
+                                    <label><input ng-model="tr.checked" ng-change="updateHandlebarStatus(item)" type="checkbox"></label>
+                                </div>
+                                <a ng-switch-when="link" href="{{ td.path }}">{{ td.text }}</a>
+                                <div ng-switch-when="list">
+                                    <div ng-repeat="l in td.list">{{ l }}</div>
+                                </div>
+                                <span ng-switch-default>{{ td.text }}</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

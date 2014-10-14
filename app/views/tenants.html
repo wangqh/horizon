@@ -1,0 +1,89 @@
+<div class="page row">
+    <div class="page-header">
+        <h1>租户 Tenants</h1>
+        <p class="lead">GlodonCloud为您提供一种随时获取的、弹性的计算能力，</p>
+    </div>
+
+    <div class="page-body">
+
+        <div class="panel-table">
+            <div class="toolbar">
+                <button ng-click="fetchList()" class="btn btn-sm btn-gray" type="button">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+                <button ng-click="createItem()" class="btn btn-sm btn-gray" type="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    新建
+                </button>
+                <button ng-class="{disabled: handleDisabled}" ng-click="removeItems()" class="btn btn-sm btn-gray" type="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    删除
+                </button>
+
+                <div class="btn-group">
+                    <form class="form-search" ng-submit="fetchList()">
+                        <span class="glyphicon glyphicon-search"></span>
+                        <input type="search" class="form-control input-sm" placeholder="" ng-model="filterService.searchText" name="searchList" />
+                    </form>
+                </div>
+
+            </div>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th width="10%">
+                        <div class="checkbox">
+                            <label><input type="checkbox"  ng-change="checkAll()" ng-model="isCheckAll"></label>
+                        </div>
+                    </th>
+                    <th>名称</th>
+                    <th>ID</th>
+                    <th>是否开启</th>
+                    <th>描述</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in searchPaginator.currentPageItems | filter:filterService.searchText">
+                    <td>
+                        <div class="checkbox">
+                            <label><input ng-model="item.checked" ng-change="updateHandlebarStatus()" type="checkbox"></label>
+                        </div>
+                    </td>
+                    <td>
+                        {{ item.name }}
+                    </td>
+                    <td>{{ item.id }}</td>
+                    <td ng-class="{'text-success': item.enabled, 'text-danger': !item.enabled }"><span class="glyphicon" ng-class="{'glyphicon-ok': item.enabled, 'glyphicon-remove': !item.enabled }"></span></td>
+                    <td>{{ item.description }}</td>
+                    <td>
+                        <div dropdown  is-open="item.isOpen" class="btn-group">
+                            <button class="btn btn-sm btn-default dropdown-toggle" type="button">
+                                更多操作
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a ng-click="edit(item)" href="#">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                    编辑
+                                </a></li>
+                                <li><a href="/horizon/tenants/{{ item.id }}/usage">
+                                    <span class="glyphicon glyphicon-stats"></span>
+                                    显示使用量
+                                </a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p ng-if="isNull" class="none" >结果为空</p>
+
+            <p class="tips">* 提示：可通过在各个资源上点击<span class="alert-info">“右键”</span>来进行常用操作，以及<span
+                    class="alert-info">“双击”</span>来修改基本属性。</p>
+
+            <div ng-show="isLoading"><p class="loading">正在加载...</p></div>
+        </div>
+    </div>
+</div>
+

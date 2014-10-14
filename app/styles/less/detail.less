@@ -1,0 +1,496 @@
+.topbar{
+  background-color: #fff;
+  padding: 0 30px;
+  border-bottom: solid @gray-lighter 1px;
+  margin-bottom: 20px;
+}
+.breadcrumb {
+  padding: 15px 0;
+  margin-bottom: 0;
+  font-size: 12px;
+}
+.breadcrumb .glyphicon{
+  color: @brand-primary;
+  margin-right: 15px;
+}
+.detail {
+  background-color: #f3f3f3;
+  margin: 0 -15px;
+  padding-bottom: 20px;
+  min-height: 100%;
+}
+.detail > .row{
+  margin: 0 10px;
+}
+.detail .title{
+  padding: 1px 0;
+}
+.description,.detail-content{
+  background-color: #fff;
+  padding: 30px;
+  margin: 0 -5px;
+}
+.description .dl-horizontal{
+  margin-bottom: 0;
+}
+.description .dl-horizontal dt,.description .dl-horizontal dd{
+  padding: 10px 8px;
+  font-size: 12px;
+}
+.description + .description{
+  margin-top: 20px;
+}
+/*.description .dl-horizontal dt{
+  width: 90px;
+}*/
+.description .dl-horizontal dd{
+  //padding-left: 110px;
+  border-bottom: 1px solid #f3f3f3;
+  min-height: 37px;
+}
+.tableItem{
+  padding: 0;
+}
+.tableItem + .tableItem{
+  margin-top: 20px;
+}
+.detail-tabs{
+  .monitor {
+    .btn-toolbar{
+      padding: 30px 30px 20px;
+      .btn-group .btn-default{
+        &.active {
+          background-color: @btn-info-bg;
+          border-color: @btn-info-border;
+          color: #fff;
+        }
+      }
+    }
+  }
+  .tab-content{
+    background-color: #fff;
+  }
+  .monitor .charts {
+    margin: 0 20px;
+    overflow: hidden;
+    .charts-title {
+      border-top: 1px dashed #eee;
+      padding: 30px 30px 10px;
+      clear: both;
+      h4 {
+        text-transform: uppercase
+      }
+    }
+
+  }
+
+}
+
+.chart {
+  padding: 20px 30px 30px;
+  background: #fff;
+  overflow: hidden;
+  min-height: 270px;
+  border: none;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.chart:nth-child(odd).thumbnail {
+  padding-right: 0
+}
+
+.chart.thumbnail .svg:hover {
+  background: #f4f9fc;
+  cursor: pointer
+}
+
+.chart .meter-title, .chart h4 {
+  font-family: "Microsoft Yahei",  Tahoma, Helvetica, Arial, sans-serif;
+  line-height: 29px;
+  margin: 0;
+  clear: both;
+  text-transform: uppercase
+}
+
+.chart .meter-title em, .chart h4 em {
+  font-family: "Microsoft Yahei",  Tahoma, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  padding-left: 10px;
+  vertical-align: top;
+  color: #777
+}
+
+.chart .svg-inner {
+  position: relative
+}
+
+.chart .alert {
+  position: absolute;
+  margin-top: -20px;
+  margin-bottom: 0;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  background: rgba(252, 248, 227, .54);
+  padding: 10px 0;
+  text-align: center;
+  margin-left: 0;
+  margin-right: 0
+}
+
+.chart .svg {
+  width: 100%;
+  background: #f8fbfd;
+  padding: 20px 0;
+  margin-top: 10px
+}
+
+.chart .svg .none {
+  line-height: 179px;
+  vertical-align: middle;
+  text-align: center
+}
+
+.chart .tips {
+  float: right;
+  color: #777;
+  padding: 0 10px;
+  line-height: 29px
+}
+
+.chart .unit, .chart .step {
+  padding: 2px 20px 2px 0;
+  font-style: normal;
+  display: inline-block
+}
+
+.chart .toggle {
+  float: right
+}
+
+.chart .labels {
+  overflow: hidden;
+  font-size: 12px;
+  color: #777;
+  min-height: 40px
+}
+
+.chart .labels .line-item {
+  display: inline-block;
+  margin-right: 10px
+}
+
+.chart .labels .line0, .chart .labels .line1, .chart .labels .line2, .chart .labels .line3, .chart .labels .line4, .chart .labels .line5, .chart .labels .line6, .chart .labels .req_c, .chart .labels .rsp_c, .chart .labels .l_rsp_c_4, .chart .labels .l_rsp_c_5, .chart .labels .b_rsp_c_1, .chart .labels .b_rsp_c_2, .chart .labels .b_rsp_c_3, .chart .labels .b_rsp_c_4, .chart .labels .b_rsp_c_5, .chart .labels .rsp_c_1, .chart .labels .rsp_c_2, .chart .labels .rsp_c_3, .chart .labels .rsp_c_4, .chart .labels .rsp_c_5, .chart .labels .lat_max, .chart .labels .lat_min, .chart .labels .lat_avg, .chart .labels .s_max, .chart .labels .s_lim, .chart .labels .s_avg, .chart .labels .l_s_c, .chart .labels .b_s_c, .chart .labels .inbound, .chart .labels .outbound, .chart .labels .cpu, .chart .labels .memory, .chart .labels .read, .chart .labels .write {
+  display: inline-block;
+  margin: 0 5px;
+  height: 10px;
+  width: 10px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px
+}
+
+.chart .labels .cpu {
+  background: #8cc9e7
+}
+
+.chart .labels .memory {
+  background: #8cc9e7
+}
+
+.chart .labels .read {
+  background: #8cc9e7
+}
+
+.chart .labels .write {
+  background: #a9d796
+}
+
+.chart .labels .inbound {
+  background: #8cc9e7
+}
+
+.chart .labels .outbound {
+  background: #a9d796
+}
+
+.chart .labels .line0 {
+  background: #8cc9e7
+}
+
+.chart .labels .line1 {
+  background: #a9d796
+}
+
+.chart .labels .line2 {
+  background: #f3e28c
+}
+
+.chart .labels .line3 {
+  background: #bf9b76
+}
+
+.chart .labels .line4 {
+  background: #e38484
+}
+
+.chart .labels .line5 {
+  background: #b0b0b0
+}
+
+.chart .labels .line6 {
+  background: #a795ba
+}
+
+.chart .overlay {
+  fill: none;
+  pointer-events: all
+}
+
+.chart .focus circle {
+  fill: #db8361
+}
+
+.chart .focus rect {
+  fill: #2a2d2e
+}
+
+.chart .focus text {
+  fill: #fff
+}
+
+.chart.LB .meter-title {
+  display: block;
+  font-size: 18px;
+  line-height: 36px;
+  vertical-align: middle;
+  color: #1f90c8;
+  clear: both
+}
+
+.chart.LB .lines {
+  float: right
+}
+
+.chart.LB .lines input[type=checkbox] {
+  margin: 0 4px 0 0
+}
+
+.chart.LB .params {
+  float: left
+}
+
+.chart.LB .params span {
+  color: #777;
+  font-size: 12px;
+  line-height: 16px
+}
+
+.chart.LB .svg {
+  margin-bottom: 30px
+}
+
+.chart .none {
+  fill: #777
+}
+
+.chart .axis path.domain {
+  fill: none
+}
+
+.chart .axis line {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 1px
+}
+
+.chart .axis text {
+  fill: #777
+}
+
+.chart .x.axis {
+  pathdisplay: none
+}
+
+.chart .dot {
+  fill: #a9d796
+}
+
+.chart .brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges
+}
+
+.chart .line {
+  fill: none;
+  stroke-width: 2px
+}
+
+.disk-usage-chart {
+  clear: both;
+  padding: 0 30px 10px
+}
+
+.disk-usage-chart h4 {
+  text-transform: uppercase
+}
+
+.disk-usage-chart .btn-show-chart {
+  margin: 0 10px;
+  text-transform: initial;
+  font-size: 12px
+}
+
+.disk-usage-chart {
+  clear: both;
+  padding: 0 30px 10px
+}
+
+.disk-usage-chart h4 {
+  text-transform: uppercase
+}
+
+.disk-usage-chart .btn-show-chart {
+  margin: 0 10px;
+  text-transform: initial;
+  font-size: 12px
+}
+
+.disk-usage-datas {
+  background: #f8fbfd;
+  font-size: 12px;
+  padding: 5px 10px
+}
+
+.disk-usage-datas li {
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace
+}
+
+.disk-usage-datas li .partition {
+  display: inline-block;
+  padding: 5px 10px
+}
+
+.disk-usage-datas li .usage {
+  display: inline-block;
+  padding: 2px 10px;
+  background: #dff0d8;
+  color: #468847;
+  -webkit-border-radius: 90px;
+  -moz-border-radius: 90px;
+  border-radius: 90px
+}
+
+.disk-usage-datas li .used-rest {
+  display: inline-block;
+  padding: 5px 10px;
+  color: #777
+}
+
+.disk-usage-datas li .usage.usage-80, .disk-usage-datas li .usage.usage-80:hover {
+  background: #fcf8e3;
+  color: #c09853
+}
+
+.disk-usage-datas li .usage.usage-81, .disk-usage-datas li .usage.usage-81:hover {
+  background: #fcf8e3;
+  color: #c09853
+}
+
+.disk-usage-datas li .usage.usage-82, .disk-usage-datas li .usage.usage-82:hover {
+  background: #fcf8e3;
+  color: #c09853
+}
+
+.disk-usage-datas li .usage.usage-83, .disk-usage-datas li .usage.usage-83:hover {
+  background: #fcf8e3;
+  color: #c09853
+}
+
+.disk-usage-datas li .usage.usage-84, .disk-usage-datas li .usage.usage-84:hover {
+  background: #fcf8e3;
+  color: #c09853
+}
+
+.disk-usage-datas li .usage.usage-85, .disk-usage-datas li .usage.usage-85:hover {
+  background: #fcf8e3;
+  color: #c09853
+}
+
+.disk-usage-datas li .usage.usage-86, .disk-usage-datas li .usage.usage-86:hover {
+  background: #fcf8e3;
+  color: #c09853
+}
+
+.disk-usage-datas li .usage.usage-87, .disk-usage-datas li .usage.usage-87:hover {
+  background: #fcf8e3;
+  color: #c09853
+}
+
+.disk-usage-datas li .usage.usage-88, .disk-usage-datas li .usage.usage-88:hover {
+  background: #fcf8e3;
+  color: #c09853
+}
+
+.disk-usage-datas li .usage.usage-89, .disk-usage-datas li .usage.usage-89:hover {
+  background: #fcf8e3;
+  color: #c09853
+}
+
+.disk-usage-datas li .usage.usage-90, .disk-usage-datas li .usage.usage-90:hover {
+  background: #f2dede;
+  color: #b94a48
+}
+
+.disk-usage-datas li .usage.usage-91, .disk-usage-datas li .usage.usage-91:hover {
+  background: #f2dede;
+  color: #b94a48
+}
+
+.disk-usage-datas li .usage.usage-92, .disk-usage-datas li .usage.usage-92:hover {
+  background: #f2dede;
+  color: #b94a48
+}
+
+.disk-usage-datas li .usage.usage-93, .disk-usage-datas li .usage.usage-93:hover {
+  background: #f2dede;
+  color: #b94a48
+}
+
+.disk-usage-datas li .usage.usage-94, .disk-usage-datas li .usage.usage-94:hover {
+  background: #f2dede;
+  color: #b94a48
+}
+
+.disk-usage-datas li .usage.usage-95, .disk-usage-datas li .usage.usage-95:hover {
+  background: #f2dede;
+  color: #b94a48
+}
+
+.disk-usage-datas li .usage.usage-96, .disk-usage-datas li .usage.usage-96:hover {
+  background: #f2dede;
+  color: #b94a48
+}
+
+.disk-usage-datas li .usage.usage-97, .disk-usage-datas li .usage.usage-97:hover {
+  background: #f2dede;
+  color: #b94a48
+}
+
+.disk-usage-datas li .usage.usage-98, .disk-usage-datas li .usage.usage-98:hover {
+  background: #f2dede;
+  color: #b94a48
+}
+
+.disk-usage-datas li .usage.usage-99, .disk-usage-datas li .usage.usage-99:hover {
+  background: #f2dede;
+  color: #b94a48
+}
+
+.disk-usage-datas li .usage.usage-100, .disk-usage-datas li .usage.usage-100:hover {
+  background: #f2dede;
+  color: #b94a48
+}

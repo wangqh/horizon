@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="dismiss()">&times;</button>
+    <h4 class="modal-title">提示</h4>
+</div>
+<div class="modal-body">
+    <form ng-submit="submit()" class="form form-horizontal">
+        <fieldset>
+            <legend>提示</legend>
+            <div class="modal-alert" ng-class="{'alert-{{alert.type}}': true}">
+                <span class="glyphicon" ng-class="{'glyphicon-{{alert.icon}}': true}"></span>
+                {{ alert.msg }}
+            </div>
+            <div class="form-actions text-right">
+                    <button type="submit" class="btn btn-primary btn-sm">确认</button>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="cancel()">取消</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

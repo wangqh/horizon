@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN" ng-app="horizonApp">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body>
+
+    <!-- application content here -->
+    <div class="wrap" ng-controller="MainCtrl">
+        <div class="aside">
+            <div class="navigation">
+                <div class="navigation-profile">
+                    <a class="avatar" href="/profile" ng-style="setAvatar()" target="_blank"></a>
+                    <div class="user-name"><a class="name" href="/profile" target="_blank" ng-bind="user.name"></a></div>
+                    <p class="user-links">
+                        <a href="#" tooltip="Cloud"><span class="glyphicon glyphicon-home"></span></a>
+                        <a href="/" tooltip="控制台"><span class="glyphicon glyphicon-dashboard"></span></a>
+                        <a href="/account" tooltip="帐户"><span class="glyphicon glyphicon-credit-card"></span></a>
+                        <a href="/guide/index.html" target="_blank" tooltip="用户指南"><span class="glyphicon glyphicon-flag"></span></a>
+                        <a href="/auth/logout" tooltip="退出"><span class="glyphicon glyphicon-log-out"></span></a>
+                    </p>
+                </div>
+                <div class="navigation-zones">
+                    <h2>Resources</h2>
+                    <div class="zone-area">
+                        <div class="current zone">
+                            <span class="glyphicon glyphicon-map-marker"></span>
+                            <span ng-bind="zone.name"></span>
+                            <span class="en" ng-bind="'('+ zone.enName + ')'"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="navigation-permission">
+                    <my-nav list="nav.resources"></my-nav>
+                    <h2>Others</h2>
+                    <my-nav list="nav.others"></my-nav>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="butterbar" butterbar></div>
+            <div class="wrapper" ng-view></div>
+            <tips list="tips"></tips>
+        </div>
+    </div>
+
+
+
+    <!-- build:js({.,app}) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/highcharts/highcharts.js"></script>
+    <script src="bower_components/highcharts/highcharts-more.js"></script>
+    <script src="bower_components/highcharts/modules/exporting.src.js"></script>
+    <!-- endbower -->
+    <script src="scripts/components/slider.js"></script>
+    <script src="scripts/components/twaver.js"></script>
+    <script src="scripts/components/demo.js"></script>
+    <script src="scripts/components/Topology.js"></script>
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/services/user.js"></script>
+        <script src="scripts/services/userloader.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/services/index.js"></script>
+        <script src="scripts/services/homeloader.js"></script>
+        <script src="scripts/controllers/home.js"></script>
+        <script src="scripts/directives/butterbar.js"></script>
+        <script src="scripts/services/paginator.js"></script>
+        <script src="scripts/controllers/routers.js"></script>
+        <script src="scripts/controllers/vxnets.js"></script>
+        <script src="scripts/controllers/modalchangeitem.js"></script>
+        <script src="scripts/controllers/detail.js"></script>
+        <script src="scripts/services/router.js"></script>
+        <script src="scripts/services/routerdetailloader.js"></script>
+        <script src="scripts/controllers/modalcreateitem.js"></script>
+        <script src="scripts/services/vxnet.js"></script>
+        <script src="scripts/services/vxnetdetailloader.js"></script>
+        <script src="scripts/services/routercreateloader.js"></script>
+        <script src="scripts/services/interfaceloader.js"></script>
+        <script src="scripts/services/interface.js"></script>
+        <script src="scripts/services/interfacedetailloader.js"></script>
+        <script src="scripts/services/port.js"></script>
+        <script src="scripts/services/subnet.js"></script>
+        <script src="scripts/services/subnetloader.js"></script>
+        <script src="scripts/services/image.js"></script>
+        <script src="scripts/controllers/images.js"></script>
+        <script src="scripts/services/filterservice.js"></script>
+        <script src="scripts/directives/mynav.js"></script>
+        <script src="scripts/services/imageloader.js"></script>
+        <script src="scripts/directives/tips.js"></script>
+        <script src="scripts/controllers/instances.js"></script>
+        <script src="scripts/directives/slider.js"></script>
+        <script src="scripts/services/instance.js"></script>
+        <script src="scripts/controllers/modalconfirm.js"></script>
+        <script src="scripts/services/modalconfirm.js"></script>
+        <script src="scripts/controllers/modalcreateinstance.js"></script>
+        <script src="scripts/services/keypair.js"></script>
+        <script src="scripts/controllers/modaldownloadkeypair.js"></script>
+        <script src="scripts/services/relateiploader.js"></script>
+        <script src="scripts/services/instancedetailloader.js"></script>
+        <script src="scripts/controllers/instancedetail.js"></script>
+        <script src="scripts/services/vxnetcreateloader.js"></script>
+        <script src="scripts/services/imagecreateloader.js"></script>
+        <script src="scripts/controllers/modalcreateitemform.js"></script>
+        <script src="scripts/controllers/tenants.js"></script>
+        <script src="scripts/services/tenant.js"></script>
+        <script src="scripts/services/tenantcreateloader.js"></script>
+        <script src="scripts/directives/chart.js"></script>
+        <script src="scripts/controllers/tenantusage.js"></script>
+        <script src="scripts/services/tenantusageloader.js"></script>
+        <script src="scripts/directives/topology.js"></script>
+        <script src="scripts/controllers/topology.js"></script>
+        <script src="scripts/services/topologyloader.js"></script>
+        <script src="scripts/controllers/modalloading.js"></script>
+        <script src="scripts/services/modalloading.js"></script>
+        <!-- endbuild -->
+</body>
+</html>

@@ -1,0 +1,39 @@
+<div class="detail">
+    <div class="topbar">
+        <ol class="breadcrumb">
+            <li>
+                <span class="glyphicon glyphicon-dashboard"></span>
+                <a href="/horizon/tenants">租户</a>
+            </li>
+            <li class="active">租户资源使用量</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="description">
+                <div class="title">
+                    <h4>租户资源使用量</h4>
+                </div>
+                <p></p>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="thumbnail">
+                            <chart value="cpuChart" type="pie" height="400" chart-obj="cpuChartObj"></chart>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="thumbnail">
+                            <chart value="diskChart" type="pie" height="400" chart-obj="diskChartObj"></chart>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="thumbnail">
+                            <chart value="ramChart" type="pie" height="400" chart-obj="ramChartObj"></chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="page row">
+    <div ng-include="'/views/networks.html'" class="page-header">
+    </div>
+    <ul class="nav nav-tabs page-tabs">
+        <li><a href="/horizon/networks/vxnets/" ><span class="glyphicon glyphicon-transfer"></span> 私有网络</a></li>
+        <li><a href="/horizon/networks/routers/" ><span class="glyphicon glyphicon-tower"></span> 路由器</a></li>
+        <li class="active"><a href="/horizon/networks/topology/" ><span class="glyphicon glyphicon-retweet"></span> 拓扑图</a></li>
+    </ul>
+
+    <div class="page-body">
+        <div class="page-intro alert-info">
+            GlodonCloud 网络拓扑图 (Network Topology) 用于图形化展示当前用户的路由器、子网、主机等资源。
+        </div>
+        <topology value="topologyData" class="topology"></topology>
+    </div>
+</div>
+

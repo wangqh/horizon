@@ -1,0 +1,3 @@
+<ul class="nav">
+    <li ng-repeat="m in list" ng-class="{active: m.selected}"><a href="{{ m.link }}" ng-click="selectItem(m)"><span class="glyphicon glyphicon-{{ m.icon }}"></span>{{ m.name }}<span class="title">{{ m.enName }}</span></a></li>
+</ul>

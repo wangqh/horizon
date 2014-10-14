@@ -1,0 +1,40 @@
+// Core variables and mixins
+@import "variables.less";
+@import "mixins.less";
+
+// Reset
+@import "normalize.less";
+
+// Core CSS
+@import "scaffolding.less";
+//@import "type.less";
+@import "forms.less";
+@import "buttons.less";
+
+#login{
+  margin-top: -170px;
+  position: absolute;
+  width: 100%;
+  top: 40%;
+}
+#login .logo{
+  height: 80px;
+  overflow: hidden;
+}
+#login .logo h1{
+  text-align: center;
+  font-size: 34px;
+  font-weight: 500;
+  color: @brand-primary;
+}
+#login .main{
+  background-color: #f2f2f2;
+  padding: 20px 0 40px;
+}
+#login .form {
+  width: 274px;
+  margin: 20px auto 0;
+}
+#login .form .item{
+  margin: 12px 0;
+}
